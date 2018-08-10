@@ -91,7 +91,7 @@ class YOLO(object):
                                            self.input_image_shape, score_threshold=self.score, iou_threshold=self.iou)
         return boxes, scores, classes
 
-    def detect_image(self, image,img_path):#检测每一张图片的人脸位置
+    def detect_image(self, image):#检测每一张图片的人脸位置
         start = timer()  # 起始时间
         pic_filename=os.path.basename(img_path)
         # txt_filename=pic_filename.replace("jpg","txt")
@@ -167,13 +167,14 @@ class YOLO(object):
 
 
 def detect_img_for_test(yolo):
+    global img_path
 
     for img_path in iterbrowse(img_root_path):
         print('img_path的路径是：'+img_path)
         image = Image.open(img_path)
         filename=os.path.basename(img_path)
         print('filename'+filename)
-        r_image = yolo.detect_image(image,img_path)
+        r_image = yolo.detect_image(image)
         # r_image.show()  # 先显示，然后再保存
         r_image.save(result_path+filename)
 
